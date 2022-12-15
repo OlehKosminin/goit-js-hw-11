@@ -25,6 +25,6 @@ export function renderCards(cards) {
 </div>`
     )
     .join(' ');
-
+  console.log(markup);
   return markup;
 }
