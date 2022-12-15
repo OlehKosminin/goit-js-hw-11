@@ -14,7 +14,7 @@ export class ApiServer {
       .then(({ data }) => {
         // console.log('after', this.page);
         // console.log('after', this.per_page);
-        this.incrementPages();
+        // this.incrementPages();
         // console.log('before', this.page);
         // console.log('before', this.per_page);
         return data.hits;

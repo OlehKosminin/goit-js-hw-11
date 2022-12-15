@@ -22,28 +22,34 @@ function onInput(e) {
 
   clearMarkup();
 
-  fetchCard.fetchApi().then(card => {
-    console.log(card);
+  fetchCard
+    .fetchApi()
+    .then(card => {
+      console.log(card);
+      fetchCard.resetPage();
+      console.log('fetchCard.resetPage(): ', fetchCard.resetPage());
+      if (card[0] === undefined) {
+        onError();
+        removeBtnStyle();
+        return;
+      }
+      if (fetchCard.name === '') {
+        onError();
+        removeBtnStyle();
+        return;
+      }
 
-    if (card[0] === undefined) {
-      onError();
-      removeBtnStyle();
-      return;
-    }
-    if (fetchCard.name === '') {
-      onError();
-      removeBtnStyle();
-      return;
-    }
-
-    fetchCard.resetPage();
-    refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
-    addBtnStyle();
-  });
+      refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
+      addBtnStyle();
+    })
+    .then(() => {
+      onSuccess();
+    });
 }
 
 function onLoadMore() {
   fetchCard.fetchApi().then(card => {
+    fetchCard.incrementPages();
     refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
   });
 }
@@ -58,6 +64,10 @@ function removeBtnStyle() {
 
 function clearMarkup() {
   refs.galleryEl.innerHTML = '';
+}
+
+function onSuccess() {
+  Notiflix.Notify.success('You found page!!');
 }
 
 function onError() {
