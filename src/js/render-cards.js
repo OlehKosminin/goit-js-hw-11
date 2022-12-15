@@ -1,7 +1,8 @@
 export function renderCards(cards) {
-  return (markup = cards.map(
-    card =>
-      `<div class="photo-card">
+  const markup = cards
+    .map(
+      card =>
+        `<div class="photo-card">
      <img src="${card.webformatURL}" alt="${card.tags}" loading="lazy" />
       <div class="info">
         <p class="info-item">
@@ -22,5 +23,8 @@ export function renderCards(cards) {
         </p>
     </div>
 </div>`
-  )).join(' ');
+    )
+    .join(' ');
+
+  return markup;
 }

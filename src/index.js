@@ -26,8 +26,7 @@ function onInput(e) {
     .fetchApi()
     .then(card => {
       console.log(card);
-      fetchCard.resetPage();
-      console.log('fetchCard.resetPage(): ', fetchCard.resetPage());
+
       if (card[0] === undefined) {
         onError();
         removeBtnStyle();
@@ -38,6 +37,8 @@ function onInput(e) {
         removeBtnStyle();
         return;
       }
+
+      fetchCard.resetPage();
 
       refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
       addBtnStyle();
