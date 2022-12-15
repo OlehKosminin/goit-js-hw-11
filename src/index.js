@@ -1,52 +1,60 @@
-import { fetchCard } from './js/fetch-card';
+import { ApiServer } from './js/fetch-card';
 import { renderCards } from './js/render-cards';
+import { renderButton } from './js/render-button';
 import Notiflix from 'notiflix';
-
-// fetchCard('cat').then(cat => {
-//   cat.hits.map(cat => {
-//     console.log(cat.id);
-//   });
-// });
-
-// fetchCard('cat').then(result => {
-//   console.log(result);
-//   result.hits.map(result => {
-//     console.log(result.webformatURL);
-//     console.log(result.largeImageURL);
-//   });
-// });
 
 const refs = {
   formEl: document.querySelector('.search-form'),
   inputEl: document.querySelector('[type="text"]'),
   buttonEl: document.querySelector('[type="submit"]'),
   galleryEl: document.querySelector('.gallery'),
+  loadMoreBtn: document.querySelector('.load-more'),
 };
 
 refs.formEl.addEventListener('submit', onInput);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
-let searchCard = '';
+const fetchCard = new ApiServer();
 
 function onInput(e) {
   e.preventDefault();
+  fetchCard.name = refs.inputEl.value.trim();
 
-  searchCard = refs.inputEl.value.trim();
-  console.log(searchCard);
-}
+  clearMarkup();
 
-fetchCard(searchCard)
-  .then(resp => resp.hits)
-  .then(card => {
-    if (searchCard === '') {
-      clearMarkup();
+  fetchCard.fetchApi().then(card => {
+    console.log(card);
+
+    if (card[0] === undefined) {
+      onError();
+      removeBtnStyle();
+      return;
+    }
+    if (fetchCard.name === '') {
+      onError();
+      removeBtnStyle();
       return;
     }
 
-    // const markup = renderCards(card);
+    fetchCard.resetPage();
+    refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
+    addBtnStyle();
+  });
+}
 
-    // refs.galleryEl.innerHTML('beforeend', markup);
+function onLoadMore() {
+  fetchCard.fetchApi().then(card => {
     refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
   });
+}
+
+function addBtnStyle() {
+  refs.loadMoreBtn.style.display = 'block';
+}
+
+function removeBtnStyle() {
+  refs.loadMoreBtn.style.display = 'none';
+}
 
 function clearMarkup() {
   refs.galleryEl.innerHTML = '';
@@ -54,7 +62,7 @@ function clearMarkup() {
 
 function onError() {
   clearMarkup();
-  Notify.failure(
+  Notiflix.Notify.failure(
     'Sorry, there are no images matching your search query. Please try again.'
   );
 }

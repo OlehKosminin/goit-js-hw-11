@@ -14,3 +14,44 @@ button {
   border-radius: 3px;
   border-color: antiquewhite;
 }
+
+img {
+  height: 150px;
+  width: 200px;
+}
+
+.info {
+  margin: -3px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -3px;
+  margin-left: 5px;
+}
+
+.photo-card {
+  border: solid 3px black;
+
+  margin: 3px;
+}
+
+.info-item {
+  margin: 3px;
+}
+// button
+.load-more {
+  // position: relative;
+  // bottom: 5px;
+  display: none;
+
+  margin: 10px;
+
+  height: 35px;
+
+  // display: block;
+
+  margin-left: auto;
+  margin-right: auto;
+}
