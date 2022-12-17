@@ -46,6 +46,7 @@ async function onInput(e) {
       }
 
       if (card.length > 0) {
+        addBtnStyle();
         onSuccess();
       }
 
@@ -53,7 +54,6 @@ async function onInput(e) {
       addBtnStyle();
     })
     .then(() => {
-      removeBtnStyle();
       return;
     });
 }
