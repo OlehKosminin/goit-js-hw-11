@@ -22,40 +22,35 @@ async function onInput(e) {
   fetchCard.resetPage();
   clearMarkup();
 
-  fetchCard
-    .fetchApi()
-    .then(card => {
-      console.log(card);
+  fetchCard.fetchApi().then(card => {
+    console.log(card);
 
-      if (card.length === 0) {
-        onEnd();
-        removeBtnStyle();
-        return;
-      }
-
-      if (card[0] === undefined) {
-        onError();
-        removeBtnStyle();
-        return;
-      }
-
-      if (fetchCard.name === '') {
-        onError();
-        removeBtnStyle();
-        return;
-      }
-
-      if (card.length > 0) {
-        addBtnStyle();
-        onSuccess();
-      }
-
-      refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
-      addBtnStyle();
-    })
-    .then(() => {
+    if (card.length === 0) {
+      onEnd();
+      removeBtnStyle();
       return;
-    });
+    }
+
+    if (card[0] === undefined) {
+      onError();
+      removeBtnStyle();
+      return;
+    }
+
+    if (fetchCard.name === '') {
+      onError();
+      removeBtnStyle();
+      return;
+    }
+
+    if (card.length > 0) {
+      addBtnStyle();
+      onSuccess();
+    }
+
+    refs.galleryEl.insertAdjacentHTML('beforeend', renderCards(card));
+    addBtnStyle();
+  });
 }
 
 function onLoadMore() {
