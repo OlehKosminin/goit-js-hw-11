@@ -12,11 +12,8 @@ export class ApiServer {
         `https://pixabay.com/api/?key=31944414-e4d1ae47e500b71f7e7baa805&q=${this.searchName}&image_type=photo&orientation=horizontal&sefesearch=true&page=${this.page}&per_page=${this.per_page}`
       )
       .then(({ data }) => {
-        // console.log('after', this.page);
-        // console.log('after', this.per_page);
         this.incrementPages();
-        // console.log('before', this.page);
-        // console.log('before', this.per_page);
+        console.log(this);
         return data.hits;
       });
   }
